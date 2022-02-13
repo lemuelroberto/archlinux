@@ -29,3 +29,11 @@ unless you have read through it first.
 ```bash
 curl -sL https://bit.ly/3sWTxt8 | bash
 ```
+
+## Build
+
+Builds packages and creates the database for the repository.
+
+```bash
+./build
+```

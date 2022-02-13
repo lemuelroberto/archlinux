@@ -1,0 +1,10 @@
+#!/bin/bash
+
+set -euo pipefail
+trap 'var=s; s=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
+
+REPO_NAME=lemuel
+
+rm -fv ./*.pkg.tar.zst ${REPO_NAME}.db* ${REPO_NAME}.files*
+makepkg
+repo-add ${REPO_NAME}.db.tar.xz ./*.pkg.tar.zst
