@@ -1,0 +1,121 @@
+#!/bin/bash
+# WARNING: this script will destroy data on the selected disk.
+
+set -euo pipefail
+trap 'var=s; s=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
+
+# Set up logging
+exec 1> >(tee "stdout.log")
+exec 2> >(tee "stderr.log")
+
+# REPO_URL="https://github.com/lemuelroberto/archlinux/releases/latest/download"
+REPO_URL="https://github.com/lemuelroberto/archlinux/releases/download/v0.0.1-alpha"
+MIRRORLIST_URL="https://archlinux.org/mirrorlist/?country=BR&protocol=http&protocol=https&use_mirror_status=on"
+
+pacman -Sy --noconfirm pacman-contrib dialog
+
+echo "Updating mirror list"
+curl -s "$MIRRORLIST_URL" | \
+    sed -e 's/^#Server/Server/' -e '/^#/d' | \
+    rankmirrors -n 5 - > /etc/pacman.d/mirrorlist
+
+# Get infomation from user
+hostname=$(dialog --stdout --inputbox "Enter hostname" 0 0) || exit 1
+clear
+: "${hostname:?'hostname cannot be empty'}"
+
+user=$(dialog --stdout --inputbox "Enter admin username" 0 0) || exit 1
+clear
+: "${user:?'user cannot be empty'}"
+
+password=$(dialog --stdout --passwordbox "Enter admin password" 0 0) || exit 1
+clear
+: "${password:?'password cannot be empty'}"
+password_confirmation=$(dialog --stdout --passwordbox "Enter admin password again" 0 0) || exit 1
+clear
+[[ "$password" == "$password_confirmation" ]] || ( echo "Passwords did not match"; exit 1; )
+
+devicelist=$(lsblk -dplnx size -o name,size | grep -Ev "boot|rpmb|loop" | tac)
+# shellcheck disable=SC2086
+device=$(dialog --stdout --menu "Select installation disk" 0 0 0 ${devicelist}) || exit 1
+clear
+
+timedatectl set-ntp true
+
+# Setup the disk and partitions
+efi_size=128
+efi_end=$(( efi_size + 1 ))
+swap_size=1024
+swap_end=$(( swap_size + efi_size + 1 ))
+
+parted --script "${device}" -- mklabel gpt \
+  mkpart ESP fat32 1Mib ${efi_end}MiB \
+  set 1 boot on \
+  mkpart primary linux-swap ${efi_end}MiB ${swap_end}MiB \
+  mkpart primary ext4 ${swap_end}MiB 100%
+
+# Simple globbing was not enough as on one device I needed to match /dev/mmcblk0p1
+# but not /dev/mmcblk0boot1 while being able to match /dev/sda1 on other devices.
+# shellcheck disable=SC2010
+part_boot="$(ls "${device}"* | grep -E "^${device}p?1$")"
+# shellcheck disable=SC2010
+part_swap="$(ls "${device}"* | grep -E "^${device}p?2$")"
+# shellcheck disable=SC2010
+part_root="$(ls "${device}"* | grep -E "^${device}p?3$")"
+
+wipefs "${part_boot}"
+wipefs "${part_swap}"
+wipefs "${part_root}"
+
+mkfs.vfat -F32 "${part_boot}"
+mkswap "${part_swap}"
+mkfs.f2fs -f "${part_root}"
+
+swapon "${part_swap}"
+mount "${part_root}" /mnt
+mkdir /mnt/boot
+mount "${part_boot}" /mnt/boot
+
+# Install and configure the basic system
+cat >>/etc/pacman.conf <<EOF
+[lemuel]
+SigLevel = Optional TrustAll
+Server = $REPO_URL
+EOF
+
+pacstrap /mnt lemuel-base
+genfstab -t PARTUUID /mnt >> /mnt/etc/fstab
+echo "${hostname}" > /mnt/etc/hostname
+
+cat >>/mnt/etc/pacman.conf <<EOF
+[lemuel]
+SigLevel = Optional TrustAll
+Server = $REPO_URL
+EOF
+
+arch-chroot /mnt bootctl install
+
+cat <<EOF > /mnt/boot/loader/loader.conf
+default arch
+EOF
+
+cat <<EOF > /mnt/boot/loader/entries/arch.conf
+title    Arch Linux
+linux    /vmlinuz-linux
+initrd   /intel-ucode.img
+initrd   /initramfs-linux.img
+options  root=PARTUUID=$(blkid -s PARTUUID -o value "$part_root") rw
+EOF
+
+echo "LANG=en_US.UTF-8" > /mnt/etc/locale.conf
+
+arch-chroot /mnt useradd -mU -s /bin/bash -G wheel,docker "$user"
+
+arch-chroot /mnt chsh -s /bin/bash root
+arch-chroot /mnt chsh -s /bin/bash "$user"
+
+echo "$user:$password" | chpasswd --root /mnt
+echo "root:$password" | chpasswd --root /mnt
+
+arch-chroot /mnt systemctl enable NetworkManager.service
+arch-chroot /mnt systemctl enable docker.service

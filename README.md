@@ -20,3 +20,12 @@ and installers are for my personal use and as such I will not approve pull
 requests for features I do not need. Feel free to raise issues if you want help
 with your own packages, have an interesting idea, want some clarification or
 want to discuss something generally.
+
+## Install
+
+**WARNING** This will wipe a drive and install Arch Linux on it. **DO NOT** run
+unless you have read through it first.
+
+```bash
+curl -sL https://bit.ly/3sWTxt8 | bash
+```

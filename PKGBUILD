@@ -96,6 +96,7 @@ package_lemuel-base() {
         openconnect
         openssh
         pacman-contrib
+        pam
         parallel
         patch
         pavucontrol
@@ -134,6 +135,7 @@ package_lemuel-base() {
         unzip
         upx
         usbutils
+        util-linux
         vi
         vim
         vlc
