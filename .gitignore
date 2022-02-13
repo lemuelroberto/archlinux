@@ -1,0 +1,7 @@
+*.db
+*.db.tar.xz
+*.files
+*.files.tar.xz
+*.pkg.tar.zst
+pkg/
+src/

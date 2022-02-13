@@ -1,0 +1,160 @@
+# Maintainer: Lemuel Roberto Bonifácio
+pkgbase=lemuel
+pkgname=(lemuel-base)
+pkgver=1
+pkgrel=1
+pkgdesc="Base meta package for my Arch Linux machines"
+arch=(any)
+url="https://github.com/lemuelroberto/install-arch"
+license=(MIT)
+groups=(lemuel)
+
+rootdir=$PWD
+
+package_lemuel-base() {
+    install=lemuel-base.install
+
+    depends=(
+        alacritty
+        alsa-utils
+        arandr
+        autoconf
+        automake
+        baobab
+        base
+        bc
+        bind
+        binutils
+        bison
+        brightnessctl
+        calc
+        chromium
+        code
+        composer
+        cryptsetup
+        device-mapper
+        dhcpcd
+        diffutils
+        dmenu
+        docker
+        docker-compose
+        e2fsprogs
+        efibootmgr
+        eog
+        evince
+        fakeroot
+        feh
+        firefox
+        flex
+        fwupd
+        gcc
+        git
+        github-cli
+        go
+        go-tools
+        gparted
+        graphviz
+        groff
+        htop
+        hwdata
+        i3-wm
+        i3lock
+        i3status
+        inetutils
+        intel-ucode
+        jfsutils
+        jq
+        kubectl
+        less
+        libmnl
+        libreoffice-fresh
+        libtool
+        linux
+        linux-firmware
+        logrotate
+        lsof
+        lvm2
+        m4
+        make
+        man-db
+        man-pages
+        mdadm
+        meld
+        mesa
+        mtr
+        ncdu
+        netctl
+        network-manager-applet
+        networkmanager
+        networkmanager-openconnect
+        networkmanager-pptp
+        nm-connection-editor
+        nmap
+        npm
+        ntfs-3g
+        obs-studio
+        openconnect
+        openssh
+        pacman-contrib
+        parallel
+        patch
+        pavucontrol
+        pdftk
+        perl
+        php
+        pkgconf
+        pkgfile
+        protobuf
+        pulseaudio
+        pulseaudio-alsa
+        python-pip
+        python-pyqt5
+        python2
+        qt5-quickcontrols
+        qt5-sensors
+        qt5-webkit
+        reiserfsprogs
+        rsync
+        s-nail
+        sbcl
+        shadow
+        shellcheck
+        sof-firmware
+        staticcheck
+        sudo
+        sysfsutils
+        terraform
+        texinfo
+        thunar
+        totem
+        traceroute
+        transmission-gtk
+        tree
+        unrar
+        unzip
+        upx
+        usbutils
+        vi
+        vim
+        vlc
+        vulkan-intel
+        wget
+        which
+        woff2
+        xclip
+        xf86-video-intel
+        xfce4-screenshooter
+        xorg-server
+        xorg-xbacklight
+        xorg-xhost
+        xorg-xinit
+        xorg-xkill
+        xorg-xrandr
+        xorg-xset
+        yarn
+        yq
+        zip
+    )
+
+    cp -a "$rootdir/files-base/"* "$pkgdir"
+}

@@ -1,0 +1,11 @@
+post_install() {
+    post_upgrade
+}
+
+post_upgrade() {
+    ln -sf /usr/share/zoneinfo/America/Sao_Paulo "/etc/localtime"
+    echo "LANG=en_US.UTF-8" > /etc/locale.conf
+    sed 's/#pt_BR.UTF-8/pt_BR.UTF-8/' -i /etc/locale.gen
+    sed 's/#en_US.UTF-8/en_US.UTF-8/' -i /etc/locale.gen
+    locale-gen
+}
