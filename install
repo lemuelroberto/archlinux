@@ -28,13 +28,12 @@ readonly user=$(dialog --stdout --inputbox "Enter admin username" 0 0) || exit 1
 clear
 : "${user:?'user cannot be empty'}"
 
-# chpasswd: (user lemuel) pam_chauthtok failed, error: Module is unknown
-# password=$(dialog --stdout --passwordbox "Enter admin password" 0 0) || exit 1
-# clear
-# : "${password:?'password cannot be empty'}"
-# password_confirmation=$(dialog --stdout --passwordbox "Enter admin password again" 0 0) || exit 1
-# clear
-# [[ "$password" == "$password_confirmation" ]] || ( echo "Passwords did not match"; exit 1; )
+password=$(dialog --stdout --passwordbox "Enter admin password" 0 0) || exit 1
+clear
+: "${password:?'password cannot be empty'}"
+password_confirmation=$(dialog --stdout --passwordbox "Enter admin password again" 0 0) || exit 1
+clear
+[[ "$password" == "$password_confirmation" ]] || ( echo "Passwords did not match"; exit 1; )
 
 readonly devicelist=$(lsblk -dplnx size -o name,size | grep -Ev "boot|rpmb|loop" | tac)
 # shellcheck disable=SC2086
@@ -115,9 +114,8 @@ arch-chroot /mnt useradd -mU -s /bin/bash -G wheel,docker "$user"
 arch-chroot /mnt chsh -s /bin/bash root
 arch-chroot /mnt chsh -s /bin/bash "$user"
 
-# chpasswd: (user lemuel) pam_chauthtok failed, error: Module is unknown
-# echo "$user:$password" | chpasswd --root /mnt
-# echo "root:$password" | chpasswd --root /mnt
+echo "$user:$password" | chpasswd --root /mnt
+echo "root:$password" | chpasswd --root /mnt
 
 arch-chroot /mnt systemctl enable NetworkManager.service
 arch-chroot /mnt systemctl enable docker.service
