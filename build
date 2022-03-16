@@ -3,8 +3,8 @@
 set -euEo pipefail
 trap 'echo "${BASH_SOURCE:-unknown}:${LINENO:-unknown}: $BASH_COMMAND";' ERR
 
-REPO_NAME=lemuel
+readonly REPO_NAME="lemuel"
 
-rm -fv ./*.pkg.tar.zst ${REPO_NAME}.db* ${REPO_NAME}.files*
+rm -fv ./*.pkg.tar.zst "${REPO_NAME}".db* "${REPO_NAME}".files*
 makepkg
-repo-add ${REPO_NAME}.db.tar.xz ./*.pkg.tar.zst
+repo-add "${REPO_NAME}".db.tar.xz ./*.pkg.tar.zst

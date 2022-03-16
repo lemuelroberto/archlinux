@@ -9,8 +9,8 @@ exec 1> >(tee "stdout.log")
 exec 2> >(tee "stderr.log")
 
 # REPO_URL="https://github.com/lemuelroberto/archlinux/releases/latest/download"
-REPO_URL="https://github.com/lemuelroberto/archlinux/releases/download/v0.0.1-alpha"
-MIRRORLIST_URL="https://archlinux.org/mirrorlist/?country=BR&protocol=http&protocol=https&use_mirror_status=on"
+readonly REPO_URL="https://github.com/lemuelroberto/archlinux/releases/download/v0.0.1-alpha"
+readonly MIRRORLIST_URL="https://archlinux.org/mirrorlist/?country=BR&protocol=http&protocol=https&use_mirror_status=on"
 
 pacman -Sy --noconfirm pacman-contrib dialog
 
@@ -20,11 +20,11 @@ curl -s "$MIRRORLIST_URL" | \
     rankmirrors -n 5 - > /etc/pacman.d/mirrorlist
 
 # Get infomation from user
-hostname=$(dialog --stdout --inputbox "Enter hostname" 0 0) || exit 1
+readonly hostname=$(dialog --stdout --inputbox "Enter hostname" 0 0) || exit 1
 clear
 : "${hostname:?'hostname cannot be empty'}"
 
-user=$(dialog --stdout --inputbox "Enter admin username" 0 0) || exit 1
+readonly user=$(dialog --stdout --inputbox "Enter admin username" 0 0) || exit 1
 clear
 : "${user:?'user cannot be empty'}"
 
@@ -36,18 +36,18 @@ clear
 # clear
 # [[ "$password" == "$password_confirmation" ]] || ( echo "Passwords did not match"; exit 1; )
 
-devicelist=$(lsblk -dplnx size -o name,size | grep -Ev "boot|rpmb|loop" | tac)
+readonly devicelist=$(lsblk -dplnx size -o name,size | grep -Ev "boot|rpmb|loop" | tac)
 # shellcheck disable=SC2086
-device=$(dialog --stdout --menu "Select installation disk" 0 0 0 ${devicelist}) || exit 1
+readonly device=$(dialog --stdout --menu "Select installation disk" 0 0 0 ${devicelist}) || exit 1
 clear
 
 timedatectl set-ntp true
 
 # Setup the disk and partitions
-efi_size=128
-efi_end=$(( efi_size + 1 ))
-swap_size=1024
-swap_end=$(( swap_size + efi_size + 1 ))
+readonly efi_size=128
+readonly efi_end=$(( efi_size + 1 ))
+readonly swap_size=1024
+readonly swap_end=$(( swap_size + efi_size + 1 ))
 
 parted --script "${device}" -- mklabel gpt \
   mkpart ESP fat32 1Mib ${efi_end}MiB \
@@ -58,11 +58,11 @@ parted --script "${device}" -- mklabel gpt \
 # Simple globbing was not enough as on one device I needed to match /dev/mmcblk0p1
 # but not /dev/mmcblk0boot1 while being able to match /dev/sda1 on other devices.
 # shellcheck disable=SC2010
-part_boot="$(ls "${device}"* | grep -E "^${device}p?1$")"
+readonly part_boot="$(ls "${device}"* | grep -E "^${device}p?1$")"
 # shellcheck disable=SC2010
-part_swap="$(ls "${device}"* | grep -E "^${device}p?2$")"
+readonly part_swap="$(ls "${device}"* | grep -E "^${device}p?2$")"
 # shellcheck disable=SC2010
-part_root="$(ls "${device}"* | grep -E "^${device}p?3$")"
+readonly part_root="$(ls "${device}"* | grep -E "^${device}p?3$")"
 
 wipefs "${part_boot}"
 wipefs "${part_swap}"
