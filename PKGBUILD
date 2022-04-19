@@ -105,6 +105,8 @@ package_lemuel-base() {
         php
         pkgconf
         pkgfile
+        polkit
+        polkit-gnome
         protobuf
         pulseaudio
         pulseaudio-alsa
@@ -120,6 +122,7 @@ package_lemuel-base() {
         sbcl
         shadow
         shellcheck
+        shfmt
         sof-firmware
         staticcheck
         sudo
