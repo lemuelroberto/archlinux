@@ -156,6 +156,7 @@ package_lemuel-base() {
         xorg-xkill
         xorg-xrandr
         xorg-xset
+        xsel
         yarn
         yq
         zip
