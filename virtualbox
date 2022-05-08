@@ -137,13 +137,18 @@ operation_create() {
     --register
 
   VBoxManage modifyvm "${vmname}" \
+    --accelerate2dvideo on \
+    --accelerate3d on \
     --acpi on \
     --boot1 dvd \
     --boot2 disk \
-    --cpus 1 \
+    --cpus 2 \
     --firmware efi \
+    --graphicscontroller vmsvga \
     --memory 2048 \
-    --nic1 nat
+    --nic1 nat \
+    --vram 128 \
+  ;
 
   VBoxManage createmedium disk \
     --filename "${vmdirectory}/${vmname}/disk.vdi" \
