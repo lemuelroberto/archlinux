@@ -158,6 +158,7 @@ operation_create() {
   VBoxManage storageattach "${vmname}" \
     --device 0 \
     --medium "${vmdirectory}/${vmname}/disk.vdi" \
+    --nonrotational on \
     --port 0 \
     --storagectl SATA \
     --type hdd
