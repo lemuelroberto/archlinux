@@ -27,7 +27,7 @@ want to discuss something generally.
 unless you have read through it first.
 
 ```bash
-curl -sL https://bit.ly/3sWTxt8 | bash
+curl -sL https://bit.ly/lemuelroberto-archlinux-install | bash
 ```
 
 ## Build
