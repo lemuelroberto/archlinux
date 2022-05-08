@@ -167,6 +167,7 @@ package_lemuel-base() {
     )
 
     cp -a "$rootdir/files-base/"* "$pkgdir"
+    chmod -R 0750 "$pkgdir/etc/sudoers.d"
 }
 
 package_lemuel-vm-host() {
