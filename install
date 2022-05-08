@@ -8,8 +8,7 @@ trap 'echo "${BASH_SOURCE:-unknown}:${LINENO:-unknown}: $BASH_COMMAND";' ERR
 exec 1> >(tee "stdout.log")
 exec 2> >(tee "stderr.log")
 
-# REPO_URL="https://github.com/lemuelroberto/archlinux/releases/latest/download"
-readonly REPO_URL="https://github.com/lemuelroberto/archlinux/releases/download/v0.0.1-alpha"
+REPO_URL="https://github.com/lemuelroberto/archlinux/releases/latest/download"
 readonly MIRRORLIST_URL="https://archlinux.org/mirrorlist/?country=BR&protocol=http&protocol=https&use_mirror_status=on"
 
 pacman -Sy --noconfirm pacman-contrib dialog
