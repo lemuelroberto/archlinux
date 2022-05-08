@@ -45,6 +45,7 @@ package_lemuel-base() {
         efibootmgr # Linux user-space application to modify the EFI Boot Manager
         eog # Eye of Gnome: An image viewing and cataloging program
         evince # Document viewer (PDF, PostScript, XPS, djvu, dvi, tiff, cbr, cbz, cb7, cbt)
+        f2fs-tools # Tools for Flash-Friendly File System (F2FS)
         fakeroot # Tool for simulating superuser privileges
         feh # Fast and light imlib2-based image viewer
         firefox # Standalone web browser from mozilla.org
