@@ -5,7 +5,7 @@ pkgver=1
 pkgrel=1
 pkgdesc="Meta packages for my Arch Linux machines"
 arch=(any)
-url="https://github.com/lemuelroberto/install-arch"
+url="https://github.com/lemuelroberto/archlinux"
 license=(MIT)
 groups=(lemuel)
 
