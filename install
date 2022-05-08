@@ -15,9 +15,9 @@ readonly MIRRORLIST_URL="https://archlinux.org/mirrorlist/?country=BR&protocol=h
 pacman -Sy --noconfirm pacman-contrib dialog
 
 echo "Updating mirror list"
-curl -s "$MIRRORLIST_URL" | \
-    sed -e 's/^#Server/Server/' -e '/^#/d' | \
-    rankmirrors -n 5 - > /etc/pacman.d/mirrorlist
+curl -s "$MIRRORLIST_URL" \
+  | sed -e 's/^#Server/Server/' -e '/^#/d' \
+  | rankmirrors -n 5 - > /etc/pacman.d/mirrorlist
 
 # Get infomation from user
 readonly hostname=$(dialog --stdout --inputbox "Enter hostname" 0 0) || exit 1
@@ -33,7 +33,10 @@ clear
 : "${password:?'password cannot be empty'}"
 password_confirmation=$(dialog --stdout --passwordbox "Enter admin password again" 0 0) || exit 1
 clear
-[[ "$password" == "$password_confirmation" ]] || ( echo "Passwords did not match"; exit 1; )
+[[ "$password" == "$password_confirmation" ]] || (
+  echo "Passwords did not match"
+  exit 1
+)
 
 readonly devicelist=$(lsblk -dplnx size -o name,size | grep -Ev "boot|rpmb|loop" | tac)
 # shellcheck disable=SC2086
@@ -44,9 +47,9 @@ timedatectl set-ntp true
 
 # Setup the disk and partitions
 readonly efi_size=128
-readonly efi_end=$(( efi_size + 1 ))
+readonly efi_end=$((efi_size + 1))
 readonly swap_size=1024
-readonly swap_end=$(( swap_size + efi_size + 1 ))
+readonly swap_end=$((swap_size + efi_size + 1))
 
 parted --script "${device}" -- mklabel gpt \
   mkpart ESP fat32 1Mib ${efi_end}MiB \
@@ -77,7 +80,7 @@ mkdir /mnt/boot
 mount "${part_boot}" /mnt/boot
 
 # Install and configure the basic system
-cat >>/etc/pacman.conf <<EOF
+cat >> /etc/pacman.conf << EOF
 [lemuel]
 SigLevel = Optional TrustAll
 Server = $REPO_URL
@@ -87,7 +90,7 @@ pacstrap /mnt lemuel-base
 genfstab -t PARTUUID /mnt >> /mnt/etc/fstab
 echo "${hostname}" > /mnt/etc/hostname
 
-cat >>/mnt/etc/pacman.conf <<EOF
+cat >> /mnt/etc/pacman.conf << EOF
 [lemuel]
 SigLevel = Optional TrustAll
 Server = $REPO_URL
@@ -95,11 +98,11 @@ EOF
 
 arch-chroot /mnt bootctl install
 
-cat <<EOF > /mnt/boot/loader/loader.conf
+cat << EOF > /mnt/boot/loader/loader.conf
 default arch
 EOF
 
-cat <<EOF > /mnt/boot/loader/entries/arch.conf
+cat << EOF > /mnt/boot/loader/entries/arch.conf
 title    Arch Linux
 linux    /vmlinuz-linux
 initrd   /intel-ucode.img
