@@ -134,7 +134,8 @@ operation_create() {
   VBoxManage createvm --name "${vmname}" \
     --basefolder "${vmdirectory}" \
     --ostype ArchLinux_64 \
-    --register
+    --register \
+  ;
 
   VBoxManage modifyvm "${vmname}" \
     --accelerate2dvideo on \
@@ -153,12 +154,14 @@ operation_create() {
   VBoxManage createmedium disk \
     --filename "${vmdirectory}/${vmname}/disk.vdi" \
     --format VDI \
-    --size 16000
+    --size 16000 \
+  ;
 
   VBoxManage storagectl "${vmname}" \
     --add sata \
     --bootable on \
-    --name SATA
+    --name SATA \
+  ;
 
   VBoxManage storageattach "${vmname}" \
     --device 0 \
@@ -166,19 +169,22 @@ operation_create() {
     --nonrotational on \
     --port 0 \
     --storagectl SATA \
-    --type hdd
+    --type hdd \
+  ;
 
   VBoxManage storagectl "${vmname}" \
     --add ide \
     --bootable on \
-    --name IDE
+    --name IDE \
+  ;
 
   VBoxManage storageattach "${vmname}" \
     --device 1 \
     --medium "$iso_path" \
     --port 1 \
     --storagectl IDE \
-    --type dvddrive
+    --type dvddrive \
+  ;
 }
 
 # Execute operation
