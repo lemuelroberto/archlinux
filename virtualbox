@@ -31,8 +31,8 @@ help_and_exit() {
 }
 
 err_with_msg() {
-    echo >&2 "$1"
-    exit 1
+  echo >&2 "$1"
+  exit 1
 }
 
 err_with_help() {
@@ -58,7 +58,7 @@ case "$operation" in
     readonly longoptions="name:,directory:,iso:"
     readonly options="n:d:i:"
     ;;
-  delete|start|poweroff)
+  delete | start | poweroff)
     readonly longoptions="name:"
     readonly options="n:"
     ;;
@@ -69,11 +69,12 @@ esac
 
 # Read options for operation
 readonly arguments=("$@")
-opts=$(getopt \
-  --name "$(basename "$0") $operation" \
-  --longoptions "$longoptions" \
-  --options "$options" \
-  -- "${arguments[@]:1}"
+opts=$(
+  getopt \
+    --name "$(basename "$0") $operation" \
+    --longoptions "$longoptions" \
+    --options "$options" \
+    -- "${arguments[@]:1}"
 )
 
 eval set -- "$opts"
@@ -81,19 +82,19 @@ unset opts
 
 while true; do
   case "$1" in
-    -n|--name)
+    -n | --name)
       readonly name="$2"
       shift 2
       continue
       ;;
 
-    -d|--directory)
+    -d | --directory)
       readonly directory="$2"
       shift 2
       continue
       ;;
 
-    -i|--iso)
+    -i | --iso)
       readonly iso="$2"
       shift 2
       continue
@@ -117,7 +118,7 @@ case "$operation" in
     [[ -z ${directory+x} ]] && err_with_help "error: directory param is required"
     [[ -z ${iso+x} ]] && err_with_help "error: iso param is required"
     ;;
-  delete|start|poweroff)
+  delete | start | poweroff)
     [[ -z ${name+x} ]] && err_with_help "error: name param is required"
     ;;
   *)
