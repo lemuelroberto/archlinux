@@ -148,7 +148,7 @@ operation_create() {
   VBoxManage createmedium disk \
     --filename "${vmdirectory}/${vmname}/disk.vdi" \
     --format VDI \
-    --size 8000
+    --size 16000
 
   VBoxManage storagectl "${vmname}" \
     --add sata \
