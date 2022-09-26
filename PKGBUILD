@@ -116,7 +116,6 @@ package_lemuel-base() {
         pulseaudio-alsa # ALSA Configuration for PulseAudio
         python-pip # The PyPA recommended tool for installing Python packages
         python-pyqt5 # A set of Python bindings for the Qt5 toolkit
-        python2 # A high-level scripting language
         qt5-quickcontrols # Reusable Qt Quick based UI controls to create classic desktop-style user interfaces
         qt5-sensors # Provides access to sensor hardware and motion gesture recognition
         qt5-webkit # Classes for a WebKit2 based implementation and a new QML API
