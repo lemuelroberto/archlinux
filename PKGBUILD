@@ -1,7 +1,7 @@
 # Maintainer: Lemuel Roberto Bonifácio
 pkgbase=lemuel
 pkgname=(lemuel-base lemuel-vm-host lemuel-vm-guest)
-pkgver=1
+pkgver=1.1
 pkgrel=1
 pkgdesc="Meta packages for my Arch Linux machines"
 arch=(any)
