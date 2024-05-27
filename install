@@ -45,9 +45,9 @@ clear
 timedatectl set-ntp true
 
 # Setup the disk and partitions
-readonly efi_size=128
+readonly efi_size=1024
 readonly efi_end=$((efi_size + 1))
-readonly swap_size=1024
+readonly swap_size=2048
 readonly swap_end=$((swap_size + efi_size + 1))
 
 parted --script "${device}" -- mklabel gpt \
