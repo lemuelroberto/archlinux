@@ -1,7 +1,7 @@
 # Maintainer: Lemuel Roberto Bonifácio
 pkgbase=lemuel
 pkgname=(lemuel-base lemuel-vm-host lemuel-vm-guest)
-pkgver=1.1
+pkgver=1.2
 pkgrel=1
 pkgdesc="Meta packages for my Arch Linux machines"
 arch=(any)
@@ -68,7 +68,6 @@ package_lemuel-base() {
         intel-ucode # Microcode update files for Intel CPUs
         jfsutils # JFS filesystem utilities
         jq # Command-line JSON processor
-        kubectl # A command line tool for communicating with a Kubernetes API server
         less # A terminal based program for viewing text files
         libmnl # Minimalistic user-space library oriented to Netlink developers.
         libreoffice-fresh # LibreOffice branch which contains new features and program enhancements
@@ -87,11 +86,10 @@ package_lemuel-base() {
         mesa # An open-source implementation of the OpenGL specification
         mtr # Combines the functionality of traceroute and ping into one tool (CLI version)
         ncdu # Disk usage analyzer with an ncurses interface
+        neovim # Fork of Vim aiming to improve user experience, plugins, and GUIs
         netctl # Profile based systemd network management
         network-manager-applet # Applet for managing network connections
         networkmanager # Network connection manager and user applications
-        networkmanager-openconnect # NetworkManager VPN plugin for OpenConnect
-        networkmanager-pptp # NetworkManager VPN plugin for PPTP
         nm-connection-editor # NetworkManager GUI connection editor and widgets
         nmap # Utility for network discovery and security auditing
         npm # A package manager for javascript
@@ -130,7 +128,6 @@ package_lemuel-base() {
         staticcheck # The advanced Go linter
         sudo # Give certain users the ability to run some commands as root
         sysfsutils # System Utilities Based on Sysfs
-        terraform # HashiCorp tool for building and updating infrastructure as code idempotently
         texinfo # GNU documentation system for on-line information and printed output
         thunar # Modern file manager for Xfce
         totem # Movie player for the GNOME desktop based on GStreamer
@@ -145,6 +142,7 @@ package_lemuel-base() {
         vi # The original ex/vi text editor
         vim # Vi Improved, a highly configurable, improved version of the vi text editor
         vlc # Multi-platform MPEG, VCD/DVD, and DivX player
+        vulkan-icd-loader # Vulkan Installable Client Driver (ICD) Loader
         vulkan-intel # Intel's Vulkan mesa driver
         wget # Network utility to retrieve files from the Web
         which # A utility to show the full path of commands
@@ -160,7 +158,6 @@ package_lemuel-base() {
         xorg-xrandr # Primitive command line interface to RandR extension
         xorg-xset # User preference utility for X
         xsel # XSel is a command-line program for getting and setting the contents of the X selection
-        yarn # Fast, reliable, and secure dependency management
         yq # Command-line YAML, XML, TOML processor - jq wrapper for YAML/XML/TOML documents
         zip # Compressor/archiver for creating and modifying zipfiles
     )
