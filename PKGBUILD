@@ -113,10 +113,6 @@ package_lemuel-base() {
         pulseaudio # A featureful, general-purpose sound server
         pulseaudio-alsa # ALSA Configuration for PulseAudio
         python-pip # The PyPA recommended tool for installing Python packages
-        python-pyqt5 # A set of Python bindings for the Qt5 toolkit
-        qt5-quickcontrols # Reusable Qt Quick based UI controls to create classic desktop-style user interfaces
-        qt5-sensors # Provides access to sensor hardware and motion gesture recognition
-        qt5-webkit # Classes for a WebKit2 based implementation and a new QML API
         reiserfsprogs # Reiserfs utilities
         rsync # A fast and versatile file copying tool for remote and local files
         s-nail # Environment for sending and receiving mail
