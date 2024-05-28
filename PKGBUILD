@@ -1,7 +1,7 @@
 # Maintainer: Lemuel Roberto Bonifácio
 pkgbase=lemuel
 pkgname=(lemuel-base lemuel-vm-host lemuel-vm-guest)
-pkgver=1.3
+pkgver=1.4
 pkgrel=1
 pkgdesc="Meta packages for my Arch Linux machines"
 arch=(any)
@@ -35,6 +35,7 @@ package_lemuel-base() {
         code # The Open Source build of Visual Studio Code (vscode) editor
         composer # Dependency Manager for PHP
         cryptsetup # Userspace setup tool for transparent encryption of block devices using dm-crypt
+        debugedit # Tool to mangle source locations in .debug files
         device-mapper # Device mapper userspace library and tools
         dhcpcd # RFC2131 compliant DHCP client daemon
         diffutils # Utility programs used for creating patch files
