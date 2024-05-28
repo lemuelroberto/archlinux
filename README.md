@@ -37,3 +37,16 @@ Builds packages and creates the database for the repository.
 ```bash
 ./build
 ```
+
+Alternative using docker:
+
+```bash
+docker run \
+    --interactive \
+    --tty \
+    --user $(id -u):$(id -g) \
+    --volume "$(pwd)":/mnt/lemuel \
+    --workdir /mnt/lemuel \
+    archlinux:base-devel \
+    /mnt/lemuel/build
+```
