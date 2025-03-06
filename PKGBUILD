@@ -57,6 +57,7 @@ package_lemuel-base() {
         github-cli # The GitHub CLI
         go # Core compiler tools for the Go programming language
         go-tools # Developer tools for the Go programming language
+        go-yq # Portable command-line YAML processor
         gparted # A Partition Magic clone, frontend to GNU Parted
         graphviz # Graph visualization software
         groff # GNU troff text-formatting system
@@ -155,7 +156,6 @@ package_lemuel-base() {
         xorg-xrandr # Primitive command line interface to RandR extension
         xorg-xset # User preference utility for X
         xsel # XSel is a command-line program for getting and setting the contents of the X selection
-        yq # Command-line YAML, XML, TOML processor - jq wrapper for YAML/XML/TOML documents
         zip # Compressor/archiver for creating and modifying zipfiles
     )
 
