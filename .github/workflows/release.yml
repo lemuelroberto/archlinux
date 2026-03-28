@@ -1,0 +1,54 @@
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - '[0-9][0-9][0-9][0-9].[0-9]*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: archlinux:base-devel
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate version
+        run: |
+          TAG_VERSION="${GITHUB_REF_NAME}"
+          PKGBUILD_VERSION=$(grep -oP '^pkgver=\K.*' PKGBUILD)
+          if [ "$TAG_VERSION" != "$PKGBUILD_VERSION" ]; then
+            echo "::error::Tag ($TAG_VERSION) does not match PKGBUILD pkgver ($PKGBUILD_VERSION)"
+            exit 1
+          fi
+
+      - name: Create build user
+        run: |
+          useradd -m builder
+          chown -R builder:builder .
+
+      - name: Build packages
+        run: su builder -c 'makepkg'
+
+      - name: Build repo database
+        run: su builder -c 'repo-add lemuel.db.tar.xz *.pkg.tar.zst'
+
+      - name: Prepare database files
+        run: |
+          rm lemuel.db lemuel.files
+          cp lemuel.db.tar.xz lemuel.db
+          cp lemuel.files.tar.xz lemuel.files
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: ${{ github.ref_name }}
+          files: |
+            *.pkg.tar.zst
+            lemuel.db
+            lemuel.db.tar.xz
+            lemuel.files
+            lemuel.files.tar.xz
