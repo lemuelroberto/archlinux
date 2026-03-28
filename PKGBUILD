@@ -146,7 +146,6 @@ package_lemuel-base() {
         which # A utility to show the full path of commands
         woff2 # Web Open Font Format 2 reference implementation
         xclip # Command line interface to the X11 clipboard
-        xf86-video-intel # X.org Intel i810/i830/i915/945G/G965+ video drivers
         xfce4-screenshooter # An application to take screenshots
         xorg-server # Xorg X server
         xorg-xbacklight # RandR-based backlight control application
