@@ -32,7 +32,6 @@ package_lemuel-base() {
         brightnessctl # Lightweight brightness control tool
         calc # Arbitrary precision console calculator
         chromium # A web browser built for speed, simplicity, and security
-        code # The Open Source build of Visual Studio Code (vscode) editor
         composer # Dependency Manager for PHP
         cryptsetup # Userspace setup tool for transparent encryption of block devices using dm-crypt
         debugedit # Tool to mangle source locations in .debug files
